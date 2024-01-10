@@ -6,26 +6,26 @@
         branches: 
           - todoTs
     jobs:
-      # build:
-      #   runs-on: ubuntu-latest
-      #   steps:
-      #     - name: Checkout source 
-      #       uses: actions/checkout@v3
+      build:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout source 
+            uses: actions/checkout@v3
     
-      #     - name: Login to DockerHub
-      #       uses: docker/login-action@v2
-      #       with:
-      #         username: ${{ secrets.DOCKERHUB_USERNAME }}
-      #         password: ${{ secrets.DOCKERHUB_TOKEN }}
-      #     - name: build and push to DockerHub
-      #       run: |
-      #         docker buildx create --use --platform=linux/arm64,linux/amd64 --name multi-platform-builder
-      #         docker buildx inspect --bootstrap
-      #         docker buildx build --platform linux/amd64,linux/arm64/v8 --push --tag aman7681/todotypescript:latest .
+          - name: Login to DockerHub
+            uses: docker/login-action@v2
+            with:
+              username: ${{ secrets.DOCKERHUB_USERNAME }}
+              password: ${{ secrets.DOCKERHUB_TOKEN }}
+          - name: build and push to DockerHub
+            run: |
+              docker buildx create --use --platform=linux/arm64,linux/amd64 --name multi-platform-builder
+              docker buildx inspect --bootstrap
+              docker buildx build --platform linux/amd64,linux/arm64/v8 --push --tag aman7681/todotypescript:latest .
         
     
       deploy:
-        # needs: build
+        needs: build
         # runs-on: [ubuntu]
         runs-on: self-hosted
         steps: 
